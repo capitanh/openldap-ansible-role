@@ -13,9 +13,9 @@ Role Variables
 
 This role requires the following variables to be defined elsewhere in the playbook that uses it:
 ```yaml
-ldap_username:         admin							# LDAP root user name
-ldap_password:         secret							# LDAP root password
-ldap_basedn:           dc=golili,dc=net   # Base DN
+ldap_username:  admin              # LDAP root user name
+ldap_password:  secret             # LDAP root password
+ldap_basedn:    dc=golili,dc=net   # Base DN
 ```
 
 Dependencies
