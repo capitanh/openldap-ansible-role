@@ -1,0 +1,87 @@
+dn: {{ldap_basedn}}
+dc: golili
+objectClass: top
+objectClass: domain
+
+dn: cn={{ldap_username}},{{ldap_basedn}}
+objectClass: organizationalRole
+cn: {{ldap_username}}
+description: LDAP Manager
+
+dn: ou=people,{{ldap_basedn}}
+objectclass: organizationalUnit
+objectclass: top
+description: Contains entries which describe persons
+ou: people
+
+dn: ou=groups,{{ldap_basedn}}
+objectclass: organizationalUnit
+objectclass: top
+description: Contains entries which describe groups
+ou: groups
+
+################################################################
+#People
+dn: cn=Luis Novo,ou=people,{{ldap_basedn}}
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectclass: top
+cn: Luis Novo
+givenname: Luis
+sn: Novo
+uid: lnovo
+mail: lnovo@atsistemas.com
+userpassword: alibaba
+
+dn: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectclass: top
+cn: Elena Rodriguez
+givenname: Elena
+sn: Rodriguez
+uid: erodriguez
+mail: erodriguez@atsistemas.com
+userpassword: alibaba
+
+dn: cn=Alberto Perez,ou=people,{{ldap_basedn}}
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectclass: top
+cn: Alberto Perez
+givenname: Alberto
+sn: Perez
+uid: aperez
+mail: aperez@atsistemas.com
+userpassword: alibaba
+
+################################################################
+#Groups
+dn: cn=developers,ou=groups,{{ldap_basedn}}
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: developers
+uniquemember: cn=Luis Novo,ou=people,{{ldap_basedn}}
+uniquemember: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
+uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}
+
+dn: cn=project1,ou=groups,{{ldap_basedn}}
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: project1
+uniquemember: cn=Luis Novo,ou=people,{{ldap_basedn}}
+
+dn: cn=project2,ou=groups,{{ldap_basedn}}
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: project2
+uniquemember: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
+
+dn: cn=project3,ou=groups,{{ldap_basedn}}
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: project3
+uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}

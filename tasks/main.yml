@@ -1,0 +1,47 @@
+---
+- name: Install required packages
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - openldap
+    - openldap-servers
+    - openldap-clients
+
+- name: Start ldap service
+  service:
+    name: slapd
+    state: started
+
+- name: Register encripted password
+  command: slappasswd -s "{{ldap_password}}"
+  register: ldap_encripted_password
+
+- name: Copy db templates
+  template:
+    src: "{{item}}"
+    dest: /tmp
+  with_items:
+    - db.ldif
+    - base.ldif
+
+- name: Load ddbb template into ldap
+  command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
+
+- name: Copy the example ddbb
+  copy:
+    src: /usr/share/openldap-servers/DB_CONFIG.example
+    dest: /var/lib/ldap/DB_CONFIG
+    remote_src: yes
+    owner: ldap
+    group: ldap
+
+- name: Load some schemas
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
+  with_items:
+    - cosine.ldif
+    - nis.ldif
+    - inetorgperson.ldif
+
+- name: Load data
+  command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
