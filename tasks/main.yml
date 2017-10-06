@@ -37,14 +37,11 @@
     group: ldap
 
 - name: Load some schemas
-  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
-  creates: "/etc/openldap/schema/{{item}}"
+  command: "ldapadd -c -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
   with_items:
     - cosine.ldif
     - nis.ldif
     - inetorgperson.ldif
 
 - name: Load data
-  command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
-  args:
-    creates: /var/lib/ldap/
+  command: "ldapadd -c -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
