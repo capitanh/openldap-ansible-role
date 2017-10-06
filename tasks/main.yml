@@ -45,3 +45,4 @@
 
 - name: Load data
   command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
+  creates: /var/lib/ldap
