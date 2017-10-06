@@ -37,7 +37,7 @@
     group: ldap
 
 - name: Load some schemas
-  command: "ldapadd -c -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
+  command: "ldapmodify -c -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
   with_items:
     - cosine.ldif
     - nis.ldif
