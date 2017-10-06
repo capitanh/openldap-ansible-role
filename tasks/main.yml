@@ -36,14 +36,19 @@
     owner: ldap
     group: ldap
 
-- name: Load some schemas
+- name: Load some schemas (ignoring duplicate entries error for idempotence)
   command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
   register: ldap_result_code
-  failed_when: (ldap_result_code not in [0,247])
+  failed_when: ldap_result_code.rc not in [0,80]
+  changed_when: ldap_result_code.rc not in [0,80]
   with_items:
     - cosine.ldif
     - nis.ldif
     - inetorgperson.ldif
 
-- name: Load data
+- name: Load data (ignoring duplicate entries error for idempotence)
   command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
+  register: ldap_result_code
+  failed_when: ldap_result_code.rc not in [0,68]
+  changed_when: ldap_result_code.rc not in [0,68]
+
