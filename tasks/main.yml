@@ -42,7 +42,8 @@
     - cosine.ldif
     - nis.ldif
     - inetorgperson.ldif
+  creates: /etc/openldap/schema/
 
 - name: Load data
   shell: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
-  creates: /var/lib/ldap
+  creates: /var/lib/ldap/
