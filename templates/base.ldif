@@ -57,6 +57,7 @@ sn: Perez
 uid: aperez
 mail: aperez@atsistemas.com
 userpassword: alibaba
+memberof: cn=Nexus Deployer,ou=groups,{{ldap_basedn}}
 
 ################################################################
 #Groups
@@ -64,24 +65,24 @@ dn: cn=developers,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
 cn: developers
-uniquemember: cn=Luis Novo,ou=people,{{ldap_basedn}}
-uniquemember: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
-uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}
+#uniquemember: uid=lnovo,ou=people,{{ldap_basedn}}
+#uniquemember: uid=erodriguez,ou=people,{{ldap_basedn}}
+#uniquemember: uid=aperez,ou=people,{{ldap_basedn}}
 
-dn: cn=project1,ou=groups,{{ldap_basedn}}
+dn: cn=Nexus Deployer,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
-cn: project1
-uniquemember: cn=Luis Novo,ou=people,{{ldap_basedn}}
+cn: Nexus Deployer
+#uniquemember: uid=lnovo,ou=people,{{ldap_basedn}}
 
 dn: cn=project2,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
 cn: project2
-uniquemember: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
+#uniquemember: uid=erodriguez,ou=people,{{ldap_basedn}}
 
 dn: cn=project3,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
 cn: project3
-uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}
+#uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}
