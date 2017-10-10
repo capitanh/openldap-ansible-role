@@ -84,4 +84,4 @@ dn: cn=project3,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
 cn: project3
-uniquemember: cn=Alberto Perez,ou=people,{{ldap_basedn}}
+uniquemember: uid=aperez,ou=people,{{ldap_basedn}}
