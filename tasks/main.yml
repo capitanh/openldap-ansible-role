@@ -31,7 +31,7 @@
     group: root
 
 - name: Load some schemas (ignoring duplicate entries error for idempotence)
-  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{schema_path}}/{{item}}"
   register: ldap_result_code
   failed_when: ldap_result_code.rc not in [0,80]
   changed_when: ldap_result_code.rc not in [0,80]
