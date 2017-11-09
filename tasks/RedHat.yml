@@ -1,0 +1,10 @@
+---
+- name: Install required packages
+  yum:
+    name: "{{item}}"
+    state: present
+    validate_certs: no
+  with_items:
+    - openldap
+    - openldap-servers
+    - openldap-clients

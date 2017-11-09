@@ -1,12 +1,5 @@
 ---
-- name: Install required packages
-  yum:
-    name: "{{item}}"
-    state: present
-  with_items:
-    - openldap
-    - openldap-servers
-    - openldap-clients
+- include_tasks: "{{ansible_os_family}}.yml"
 
 - name: Start ldap service
   service:
