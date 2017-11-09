@@ -42,7 +42,7 @@
 
 - name: Load data (ignoring duplicate entries error for idempotence)
   command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
-  register: ldap_result_code
-  failed_when: ldap_result_code.rc not in [0,68]
-  changed_when: ldap_result_code.rc not in [0,68]
+  #register: ldap_result_code
+  #failed_when: ldap_result_code.rc not in [0,68]
+  #changed_when: ldap_result_code.rc not in [0,68]
 
