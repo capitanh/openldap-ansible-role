@@ -1,4 +1,5 @@
 ---
+- include_vars: "{{ansible_os_family}}-vars.yml"
 - include_tasks: "{{ansible_os_family}}.yml"
 
 - name: Start ldap service
@@ -23,7 +24,7 @@
 
 - name: Copy the example ddbb
   copy:
-    src: /usr/share/openldap-servers/DB_CONFIG.example
+    src: "{{dbconfig_path}}"
     dest: /var/lib/ldap/DB_CONFIG
     remote_src: yes
     owner: ldap
