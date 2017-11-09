@@ -27,8 +27,8 @@
     src: "{{dbconfig_path}}"
     dest: /var/lib/ldap/DB_CONFIG
     remote_src: yes
-    owner: ldap
-    group: ldap
+    owner: root
+    group: root
 
 - name: Load some schemas (ignoring duplicate entries error for idempotence)
   command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/{{item}}"
