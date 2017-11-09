@@ -1,0 +1,3 @@
+---
+dbtype: {1}mdb
+dbconfig_path: /usr/share/slapd/DB_CONFIG
