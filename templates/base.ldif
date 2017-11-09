@@ -1,12 +1,14 @@
-#dn: {{ldap_basedn}}
-#dc: golili
-#objectClass: top
-#objectClass: domain
-#
-#dn: cn={{ldap_username}},{{ldap_basedn}}
-#objectClass: organizationalRole
-#cn: {{ldap_username}}
-#description: LDAP Manager
+{% if ansible_os_family == 'RedHat' %}
+dn: {{ldap_basedn}}
+dc: golili
+objectClass: top
+objectClass: domain
+
+dn: cn={{ldap_username}},{{ldap_basedn}}
+objectClass: organizationalRole
+cn: {{ldap_username}}
+description: LDAP Manager
+{% endif %}
 
 dn: ou=people,{{ldap_basedn}}
 objectclass: organizationalUnit
