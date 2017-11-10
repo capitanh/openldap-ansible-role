@@ -46,7 +46,7 @@
 #  failed_when: ldap_result_code.rc not in [0,68]
 #  changed_when: ldap_result_code.rc not in [0,68]
 
-- name: Load root data
+- name: Load ldap root entry
   ldap_entry:
     state: present
     server_uri: ldap://localhost:389
@@ -56,19 +56,17 @@
     objectClass:
       - top
       - domain
-    attributes:
-      dc: golili
 
-- name: Load groups data
+- name: Load groups and users parent entry
   ldap_entry:
     state: present
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
-    dn: "ou=groups,{{ldap_basedn}}"
+    dn: "ou={{item}},{{ldap_basedn}}"
     objectClass:
       - organizationalUnit
       - top
-    attributes:
-      ou: groups
-      description: Contains entries which describe groups
+    with_items:
+      - groups
+      - people
