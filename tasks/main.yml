@@ -52,6 +52,7 @@
     bind_dn: cn=admin,dc=golili,dc=net
     bind_pw: secret
     dn: ou=groups,dc=golili,dc=net
-    objectclass:
+    objectClass:
       - organizationalUnit
       - top
+    state: present
