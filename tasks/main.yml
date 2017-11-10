@@ -103,7 +103,7 @@
       - groupOfUniqueNames
       - top
     attributes:
-      uniquemember: "uid={{item.value.members}},ou=people,{{ldap_basedn}}"
+      uniquemember: "uid={{item.value}},ou=people,{{ldap_basedn}}"
     with_dict:
       - "{{ldap_groups.members}}"
   with_items: "{{ldap_groups}}"
