@@ -71,6 +71,26 @@
     - groups
     - people
 
+- name: Load users
+  ldap_entry:
+    state: present
+    server_uri: ldap://localhost:389
+    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
+    bind_pw: "{{ldap_password}}"
+    dn: "cn=System Administrator,ou=people,{{ldap_basedn}}"
+    objectClass:
+      - person
+      - organizationalPerson
+      - inetOrgPerson
+      - top
+    attributes:
+      cn: System Administrator
+      givenname: System
+      sn: Administrator
+      uid: admin
+      mail: admin@golili.net
+      userpassword: admin
+
 - name: Load group data
   ldap_entry:
     state: present
@@ -81,6 +101,8 @@
     objectClass:
       - groupOfUniqueNames
       - top
+    attributes:
+      uniquemember: uid=admin,ou=people,{{ldap_basedn}}
   with_items:
     - administrators
     - developers
