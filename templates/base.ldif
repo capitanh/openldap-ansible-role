@@ -24,6 +24,18 @@ ou: groups
 
 ################################################################
 #People
+dn: cn=System Administrator,ou=people,{{ldap_basedn}}
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectclass: top
+cn: System Administrator
+givenname: System
+sn: Administrator
+uid: admin
+mail: admin@golili.net
+userpassword: admin
+
 dn: cn=Luis Novo,ou=people,{{ldap_basedn}}
 objectclass: person
 objectclass: organizationalPerson
@@ -33,7 +45,7 @@ cn: Luis Novo
 givenname: Luis
 sn: Novo
 uid: lnovo
-mail: lnovo@atsistemas.com
+mail: lnovo@golili.net
 userpassword: alibaba
 
 dn: cn=Elena Rodriguez,ou=people,{{ldap_basedn}}
@@ -45,7 +57,7 @@ cn: Elena Rodriguez
 givenname: Elena
 sn: Rodriguez
 uid: erodriguez
-mail: erodriguez@atsistemas.com
+mail: erodriguez@golili.net
 userpassword: alibaba
 
 dn: cn=Alberto Perez,ou=people,{{ldap_basedn}}
@@ -57,7 +69,7 @@ cn: Alberto Perez
 givenname: Alberto
 sn: Perez
 uid: aperez
-mail: aperez@atsistemas.com
+mail: aperez@golili.net
 userpassword: alibaba
 
 ################################################################
@@ -70,11 +82,11 @@ uniquemember: uid=lnovo,ou=people,{{ldap_basedn}}
 uniquemember: uid=erodriguez,ou=people,{{ldap_basedn}}
 uniquemember: uid=aperez,ou=people,{{ldap_basedn}}
 
-dn: cn=Nexus Deployer,ou=groups,{{ldap_basedn}}
+dn: cn=administrators,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
 objectclass: top
-cn: Nexus Deployer
-uniquemember: uid=lnovo,ou=people,{{ldap_basedn}}
+cn: administrators
+uniquemember: uid=admin,ou=people,{{ldap_basedn}}
 
 dn: cn=project2,ou=groups,{{ldap_basedn}}
 objectclass: groupOfUniqueNames
