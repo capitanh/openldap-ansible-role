@@ -13,22 +13,11 @@
 
 - name: Copy db templates
   template:
-    src: "{{item}}"
+    src: db.ldif
     dest: /tmp
-  with_items:
-    - db.ldif
-  #  - base.ldif
 
 - name: Load ddbb template into ldap
   command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
-
-#- name: Copy the example ddbb
-#  copy:
-#    src: "{{dbconfig_path}}"
-#    dest: /var/lib/ldap/DB_CONFIG
-#    remote_src: yes
-#    owner: root
-#    group: root
 
 - name: Load some schemas (ignoring duplicate entries error for idempotence)
   command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{schema_path}}/{{item}}"
@@ -39,12 +28,6 @@
     - cosine.ldif
     - nis.ldif
     - inetorgperson.ldif
-
-#- name: Load data (ignoring duplicate entries error for idempotence)
-#  command: "ldapadd -x -D 'cn={{ldap_username}},{{ldap_basedn}}' -w {{ldap_password}} -f /tmp/base.ldif"
-#  register: ldap_result_code
-#  failed_when: ldap_result_code.rc not in [0,68]
-#  changed_when: ldap_result_code.rc not in [0,68]
 
 - name: Load ldap root entry
   ldap_entry:
@@ -89,17 +72,28 @@
       userpassword: "{{item.value.userpassword}}"
   with_dict: "{{ldap_users}}"
 
+#- name: Load groups
+#  ldap_entry:
+#    server_uri: ldap://localhost:389
+#    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
+#    bind_pw: "{{ldap_password}}"
+#    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
+#    objectClass:
+#      - groupOfUniqueNames
+#      - top
+#    attributes:
+#      uniquemember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+#  with_subelements:
+#    - "{{ ldap_groups }}"
+#    - members
+
 - name: Load groups
   ldap_entry:
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
-    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
+    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
       - top
-    attributes:
-      uniquemember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
-  with_subelements:
-    - "{{ ldap_groups }}"
-    - members
+  with_items: "{{ldap_groups}}"
