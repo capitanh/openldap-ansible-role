@@ -105,5 +105,5 @@
     attributes:
       uniquemember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
   with_subelements:
-    - "{{ldap_groups}}"
+    - "{{ ldap_groups }}"
     - members
