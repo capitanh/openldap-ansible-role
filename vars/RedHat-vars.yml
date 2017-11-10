@@ -1,4 +1,4 @@
 ---
-dbtype: "{2}hdb"
+dbtype: "{1}mdb"
 dbconfig_path: /usr/share/openldap-servers/DB_CONFIG.example
 schema_path: /etc/openldap/schema

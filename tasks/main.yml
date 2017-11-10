@@ -17,7 +17,7 @@
     dest: /tmp
   with_items:
     - db.ldif
-    - base.ldif
+  #  - base.ldif
 
 - name: Load ddbb template into ldap
   command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
@@ -48,7 +48,6 @@
 
 - name: Load ldap root entry
   ldap_entry:
-    state: present
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
@@ -59,7 +58,6 @@
 
 - name: Load groups and users parent entry
   ldap_entry:
-    state: present
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
@@ -73,7 +71,6 @@
 
 - name: Load users
   ldap_entry:
-    state: present
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
@@ -94,7 +91,6 @@
 
 - name: Load groups
   ldap_entry:
-    state: present
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
