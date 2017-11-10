@@ -98,7 +98,7 @@
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
-    dn: "cn={{item.0.name},ou=groups,{{ldap_basedn}}"
+    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
       - top
