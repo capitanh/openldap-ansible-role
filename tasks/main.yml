@@ -48,7 +48,7 @@
 
 - name: Load groups data
   ldap_entry:
-    server_uri: ldap://localhost:10389
+    server_uri: ldap://localhost:389
     bind_dn: cn=admin,dc=golili,dc=net
     bind_pw: secret
     dn: ou=groups,dc=golili,dc=net
