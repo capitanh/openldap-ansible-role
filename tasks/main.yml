@@ -92,7 +92,7 @@
       userpassword: "{{item.value.userpassword}}"
   with_dict: "{{ldap_users}}"
 
-#- name: Load group data
+#- name: Load groups
 #  ldap_entry:
 #    state: present
 #    server_uri: ldap://localhost:389
