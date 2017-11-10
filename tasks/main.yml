@@ -77,32 +77,33 @@
     server_uri: ldap://localhost:389
     bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
     bind_pw: "{{ldap_password}}"
-    dn: "cn=System Administrator,ou=people,{{ldap_basedn}}"
+    dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
     objectClass:
       - person
       - organizationalPerson
       - inetOrgPerson
       - top
     attributes:
-      cn: System Administrator
-      givenname: System
-      sn: Administrator
-      uid: admin
-      mail: admin@golili.net
-      userpassword: admin
+      cn: "{{item.value.cn}}"
+      givenname: "{{item.value.givenname}}"
+      sn: "{{item.value.sn}}"
+      uid: "{{item.key}}"
+      mail: "{{item.value.mail}}"
+      userpassword: "{{item.value.userpassword}}"
+  with_dict: "{{ldap_users}}"
 
-- name: Load group data
-  ldap_entry:
-    state: present
-    server_uri: ldap://localhost:389
-    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
-    bind_pw: "{{ldap_password}}"
-    dn: "cn={{item}},ou=groups,{{ldap_basedn}}"
-    objectClass:
-      - groupOfUniqueNames
-      - top
-    attributes:
-      uniquemember: uid=admin,ou=people,{{ldap_basedn}}
-  with_items:
-    - administrators
-    - developers
+#- name: Load group data
+#  ldap_entry:
+#    state: present
+#    server_uri: ldap://localhost:389
+#    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
+#    bind_pw: "{{ldap_password}}"
+#    dn: "cn={{item}},ou=groups,{{ldap_basedn}}"
+#    objectClass:
+#      - groupOfUniqueNames
+#      - top
+#    attributes:
+#      uniquemember: uid=admin,ou=people,{{ldap_basedn}}
+#  with_items:
+#    - administrators
+#    - developers
