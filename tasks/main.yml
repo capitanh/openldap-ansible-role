@@ -67,6 +67,6 @@
     objectClass:
       - organizationalUnit
       - top
-    with_items:
-      - groups
-      - people
+  with_items:
+    - groups
+    - people
