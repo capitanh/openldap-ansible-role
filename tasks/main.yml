@@ -22,13 +22,13 @@
 - name: Load ddbb template into ldap
   command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
 
-- name: Copy the example ddbb
-  copy:
-    src: "{{dbconfig_path}}"
-    dest: /var/lib/ldap/DB_CONFIG
-    remote_src: yes
-    owner: root
-    group: root
+#- name: Copy the example ddbb
+#  copy:
+#    src: "{{dbconfig_path}}"
+#    dest: /var/lib/ldap/DB_CONFIG
+#    remote_src: yes
+#    owner: root
+#    group: root
 
 - name: Load some schemas (ignoring duplicate entries error for idempotence)
   command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{schema_path}}/{{item}}"
