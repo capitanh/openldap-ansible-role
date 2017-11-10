@@ -50,11 +50,12 @@
   ldap_entry:
     state: present
     server_uri: ldap://localhost:389
-    bind_dn: cn=admin,dc=golili,dc=net
-    bind_pw: secret
-    dn: ou=groups,dc=golili,dc=net
+    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
+    bind_pw: "{{ldap_password}}"
+    dn: "ou=groups,{{ldap_basedn}}"
     objectClass:
       - organizationalUnit
       - top
     attributes:
+      ou: groups
       description: Contains entries which describe groups
