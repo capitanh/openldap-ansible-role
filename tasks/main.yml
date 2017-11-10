@@ -48,6 +48,7 @@
 
 - name: Load groups data
   ldap_entry:
+    state: present
     server_uri: ldap://localhost:389
     bind_dn: cn=admin,dc=golili,dc=net
     bind_pw: secret
@@ -55,4 +56,5 @@
     objectClass:
       - organizationalUnit
       - top
-    state: present
+    attributes:
+      description: Contains entries which describe groups
