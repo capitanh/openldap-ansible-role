@@ -70,3 +70,17 @@
   with_items:
     - groups
     - people
+
+- name: Load group data
+  ldap_entry:
+    state: present
+    server_uri: ldap://localhost:389
+    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
+    bind_pw: "{{ldap_password}}"
+    dn: "cn={{item}},ou=groups,{{ldap_basedn}}"
+    objectClass:
+      - groupOfUniqueNames
+      - top
+  with_items:
+    - administrators
+    - developers
