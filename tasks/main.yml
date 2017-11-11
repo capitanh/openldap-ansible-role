@@ -83,9 +83,6 @@
       - top
     attributes:
       uniquemember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
-    with_subelements:
-      - "{{ldap_groups}}"
-      - members
   with_subelements:
     - "{{ldap_groups}}"
     - members
