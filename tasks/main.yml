@@ -73,8 +73,19 @@
     objectClass:
       - groupOfUniqueNames
       - top
-    attributes:
-      uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+    #attributes:
+    #  uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+  with_subelements:
+    - "{{ldap_groups}}"
+    #- members
+
+- name: Add users to groups
+  ldap_attr:
+    params: "{{ldap_auth}}"
+    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
+    name: uniqueMember
+    values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+    state: present
   with_subelements:
     - "{{ldap_groups}}"
     - members
