@@ -73,8 +73,8 @@
     objectClass:
       - groupOfUniqueNames
       - top
-    #attributes:
-    #  uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+    attributes:
+      uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
   with_subelements:
     - "{{ldap_groups}}"
     - members
