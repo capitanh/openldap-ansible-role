@@ -31,9 +31,7 @@
 
 - name: Load ldap root entry
   ldap_entry:
-    server_uri: ldap://localhost:389
-    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
-    bind_pw: "{{ldap_password}}"
+    params: "{{ldap_auth}}"
     dn: "{{ldap_basedn}}"
     objectClass:
       - top
@@ -41,9 +39,7 @@
 
 - name: Load groups and users parent entry
   ldap_entry:
-    server_uri: ldap://localhost:389
-    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
-    bind_pw: "{{ldap_password}}"
+    params: "{{ldap_auth}}"
     dn: "ou={{item}},{{ldap_basedn}}"
     objectClass:
       - organizationalUnit
@@ -54,9 +50,7 @@
 
 - name: Load users
   ldap_entry:
-    server_uri: ldap://localhost:389
-    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
-    bind_pw: "{{ldap_password}}"
+    params: "{{ldap_auth}}"
     dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
     objectClass:
       - person
@@ -74,9 +68,7 @@
 
 - name: Load groups
   ldap_entry:
-    server_uri: ldap://localhost:389
-    bind_dn: "cn={{ldap_username}},{{ldap_basedn}}"
-    bind_pw: "{{ldap_password}}"
+    params: "{{ldap_auth}}"
     dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
