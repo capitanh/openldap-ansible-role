@@ -77,7 +77,7 @@
     #  uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
   with_subelements:
     - "{{ldap_groups}}"
-    #- members
+    - members
 
 - name: Add users to groups
   ldap_attr:
