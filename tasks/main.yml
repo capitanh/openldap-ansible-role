@@ -74,7 +74,7 @@
       - groupOfUniqueNames
       - top
     attributes:
-      uniquemember: "uid={{item.1.uid}},ou=people,{{ldap_basedn}}"
+      uniquemember: "uid={{item.1.value}},ou=people,{{ldap_basedn}}"
   with_subelements:
     - "{{ldap_groups}}"
     - members
