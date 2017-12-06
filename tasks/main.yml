@@ -69,7 +69,7 @@
 - name: Load groups
   ldap_entry:
     params: "{{ldap_auth}}"
-    dn: "cn={{item.value.name}},ou=groups,{{ldap_basedn}}"
+    dn: "cn={{item.key}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
       - top
@@ -78,10 +78,8 @@
 - name: Add users to groups
   ldap_attr:
     params: "{{ldap_auth}}"
-    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
+    dn: "cn={{item.key}},ou=groups,{{ldap_basedn}}"
     name: uniqueMember
-    values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+    values: "uid={{item.value}},ou=people,{{ldap_basedn}}"
     state: present
-  with_subelements:
-    - "{{ldap_groups}}"
-    - members
+  with_dict: "{{ldap_groups}}"
