@@ -73,8 +73,6 @@
     objectClass:
       - groupOfUniqueNames
       - top
-    #attributes:
-    #  uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
   with_items: "{{ldap_groups}}"
 
 - name: Add users to groups
