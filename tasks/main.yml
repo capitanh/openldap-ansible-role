@@ -6,6 +6,7 @@
   service:
     name: slapd
     state: started
+
 - name: Register encripted password
   command: slappasswd -s "{{ldap_auth.bind_pw}}"
   register: ldap_encripted_password
