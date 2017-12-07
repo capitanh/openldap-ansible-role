@@ -69,7 +69,7 @@
 - name: Load groups
   ldap_entry:
     params: "{{ldap_auth}}"
-    dn: "cn={{item}},ou=groups,{{ldap_basedn}}"
+    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
       - top
