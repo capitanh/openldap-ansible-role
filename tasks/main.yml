@@ -73,6 +73,8 @@
     objectClass:
       - groupOfUniqueNames
       - top
+    attributes:
+      uniqueMember: Dummy user
   with_items: "{{ldap_groups}}"
 
 - name: Add users to groups
