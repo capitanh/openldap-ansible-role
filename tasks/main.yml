@@ -2,98 +2,101 @@
 - include_vars: "{{ansible_os_family}}-vars.yml"
 - include_tasks: "{{ansible_os_family}}.yml"
 
-- name: Start ldap service
-  service:
-    name: slapd
-    state: started
+- debug:
+    message: "Read vbles: {{ldap_auth.bind_dn}}"
 
-- name: Register encripted password
-  command: slappasswd -s "{{ldap_auth}}.{{bind_dn}}"
-  register: ldap_encripted_password
+#- name: Start ldap service
+#  service:
+#    name: slapd
+#    state: started
 
-- name: Copy db templates
-  template:
-    src: db.ldif
-    dest: /tmp
-
-- name: Load ddbb template into ldap
-  command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
-
-- name: Load some schemas (ignoring duplicate entries error for idempotence)
-  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{schema_path}}/{{item}}"
-  register: ldap_result_code
-  failed_when: ldap_result_code.rc not in [0,80]
-  changed_when: ldap_result_code.rc not in [0,80]
-  with_items:
-    - cosine.ldif
-    - nis.ldif
-    - inetorgperson.ldif
-
-- name: Load ldap root entry
-  ldap_entry:
-    params: "{{ldap_auth}}"
-    dn: "{{ldap_basedn}}"
-    objectClass:
-      - top
-      - domain
-
-- name: Load groups and users parent entry
-  ldap_entry:
-    params: "{{ldap_auth}}"
-    dn: "ou={{item}},{{ldap_basedn}}"
-    objectClass:
-      - organizationalUnit
-      - top
-  with_items:
-    - groups
-    - people
-
-- name: Load users
-  ldap_entry:
-    params: "{{ldap_auth}}"
-    dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
-    objectClass:
-      - person
-      - organizationalPerson
-      - inetOrgPerson
-      - top
-    attributes:
-      cn: "{{item.value.cn}}"
-      givenname: "{{item.value.givenname}}"
-      sn: "{{item.value.sn}}"
-      uid: "{{item.key}}"
-      mail: "{{item.value.mail}}"
-      userpassword: "{{item.value.userpassword}}"
-  with_dict: "{{ldap_users}}"
-
-- name: Load groups
-  ldap_entry:
-    params: "{{ldap_auth}}"
-    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
-    objectClass:
-      - groupOfUniqueNames
-      - top
-    attributes:
-      uniqueMember: "uid=dummy,ou=people,{{ldap_basedn}}"
-  with_items: "{{ldap_groups}}"
-
-- name: Add users to groups
-  ldap_attr:
-    params: "{{ldap_auth}}"
-    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
-    name: uniqueMember
-    values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
-    state: present
-  with_subelements:
-    - "{{ldap_groups}}"
-    - members
-
-- name: Remove dummy entry
-  ldap_attr:
-    params: "{{ldap_auth}}"
-    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
-    name: uniqueMember
-    values: "uid=dummy,ou=people,{{ldap_basedn}}"
-    state: absent
-  with_items: "{{ldap_groups}}"
+#- name: Register encripted password
+#  command: slappasswd -s "{{ldap_auth.bind_dn}}"
+#  register: ldap_encripted_password
+#
+#- name: Copy db templates
+#  template:
+#    src: db.ldif
+#    dest: /tmp
+#
+#- name: Load ddbb template into ldap
+#  command: ldapmodify -Y EXTERNAL  -H ldapi:/// -f /tmp/db.ldif
+#
+#- name: Load some schemas (ignoring duplicate entries error for idempotence)
+#  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{schema_path}}/{{item}}"
+#  register: ldap_result_code
+#  failed_when: ldap_result_code.rc not in [0,80]
+#  changed_when: ldap_result_code.rc not in [0,80]
+#  with_items:
+#    - cosine.ldif
+#    - nis.ldif
+#    - inetorgperson.ldif
+#
+#- name: Load ldap root entry
+#  ldap_entry:
+#    params: "{{ldap_auth}}"
+#    dn: "{{ldap_basedn}}"
+#    objectClass:
+#      - top
+#      - domain
+#
+#- name: Load groups and users parent entry
+#  ldap_entry:
+#    params: "{{ldap_auth}}"
+#    dn: "ou={{item}},{{ldap_basedn}}"
+#    objectClass:
+#      - organizationalUnit
+#      - top
+#  with_items:
+#    - groups
+#    - people
+#
+#- name: Load users
+#  ldap_entry:
+#    params: "{{ldap_auth}}"
+#    dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
+#    objectClass:
+#      - person
+#      - organizationalPerson
+#      - inetOrgPerson
+#      - top
+#    attributes:
+#      cn: "{{item.value.cn}}"
+#      givenname: "{{item.value.givenname}}"
+#      sn: "{{item.value.sn}}"
+#      uid: "{{item.key}}"
+#      mail: "{{item.value.mail}}"
+#      userpassword: "{{item.value.userpassword}}"
+#  with_dict: "{{ldap_users}}"
+#
+#- name: Load groups
+#  ldap_entry:
+#    params: "{{ldap_auth}}"
+#    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
+#    objectClass:
+#      - groupOfUniqueNames
+#      - top
+#    attributes:
+#      uniqueMember: "uid=dummy,ou=people,{{ldap_basedn}}"
+#  with_items: "{{ldap_groups}}"
+#
+#- name: Add users to groups
+#  ldap_attr:
+#    params: "{{ldap_auth}}"
+#    dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
+#    name: uniqueMember
+#    values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+#    state: present
+#  with_subelements:
+#    - "{{ldap_groups}}"
+#    - members
+#
+#- name: Remove dummy entry
+#  ldap_attr:
+#    params: "{{ldap_auth}}"
+#    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
+#    name: uniqueMember
+#    values: "uid=dummy,ou=people,{{ldap_basedn}}"
+#    state: absent
+#  with_items: "{{ldap_groups}}"
   
