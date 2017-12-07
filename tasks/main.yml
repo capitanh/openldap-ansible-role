@@ -89,13 +89,11 @@
     - members
 
 - name: Remove dummy entry
-  ldap_entry:
+  ldap_attr:
     params: "{{ldap_auth}}"
     dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
-    objectClass:
-      - groupOfUniqueNames
-      - top
-    attributes:
-      uniqueMember: "uid=dummy,ou=people,{{ldap_basedn}}"
+    name: uniqueMember
+    values: "uid=dummy,ou=people,{{ldap_basedn}}"
     state: absent
-  with_items: "{{ldap_groups}}"    
+  with_items: "{{ldap_groups}}"
+  
