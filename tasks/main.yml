@@ -3,7 +3,7 @@
 - include_tasks: "{{ansible_os_family}}.yml"
 
 - debug:
-    message: "Read vbles: {{ldap_auth.bind_dn}}"
+    msg: "Read vbles: {{ldap_auth.bind_dn}}"
 
 #- name: Start ldap service
 #  service:
