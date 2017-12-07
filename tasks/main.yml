@@ -8,7 +8,7 @@
     state: started
 
 - name: Register encripted password
-  command: slappasswd -s "{{ldap_password}}"
+  command: slappasswd -s "{{ldap_auth.bind_pw}}"
   register: ldap_encripted_password
 
 - name: Copy db templates
@@ -73,6 +73,8 @@
     objectClass:
       - groupOfUniqueNames
       - top
+    attributes:
+      uniqueMember: "uid=dummy,ou=people,{{ldap_basedn}}"
   with_items: "{{ldap_groups}}"
 
 - name: Add users to groups
@@ -85,3 +87,13 @@
   with_subelements:
     - "{{ldap_groups}}"
     - members
+
+- name: Remove dummy entry
+  ldap_attr:
+    params: "{{ldap_auth}}"
+    dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
+    name: uniqueMember
+    values: "uid=dummy,ou=people,{{ldap_basedn}}"
+    state: absent
+  with_items: "{{ldap_groups}}"
+  
