@@ -64,6 +64,7 @@
       uid: "{{item.key}}"
       mail: "{{item.value.mail}}"
       userpassword: "{{item.value.userpassword}}"
+      employeeNumber: "{{item.value.employeeNumber}}"
   with_dict: "{{ldap_users}}"
 
 - name: Load groups
@@ -96,4 +97,3 @@
     values: "uid=dummy,ou=people,{{ldap_basedn}}"
     state: absent
   with_items: "{{ldap_groups}}"
-  
