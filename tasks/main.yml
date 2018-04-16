@@ -64,7 +64,7 @@
       uid: "{{item.key}}"
       mail: "{{item.value.mail}}"
       userpassword: "{{item.value.userpassword}}"
-      employeeNumber: "{{item.value.employeeNumber}}"
+      #employeeNumber: "{{item.value.employeeNumber}}"
   with_dict: "{{ldap_users}}"
 
 - name: Load groups
