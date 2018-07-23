@@ -97,3 +97,8 @@
     values: "uid=dummy,ou=people,{{ldap_basedn}}"
     state: absent
   with_items: "{{ldap_groups}}"
+
+- name: Restart ldap service
+  service:
+    name: slapd
+    state: restarted
