@@ -1,9 +1,11 @@
 ---
 - name: Install required packages
   apt:
-    name: "{{item}}"
+    name: "{{packages}}"
     state: present
-  with_items:
+    update_cache: yes
+  vars:
+    packages:
     - slapd
     - ldap-utils
     - python-ldap
