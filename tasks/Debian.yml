@@ -8,4 +8,4 @@
     packages:
     - slapd
     - ldap-utils
-    - python-ldap
+    - python3-ldap
