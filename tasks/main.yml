@@ -8,7 +8,7 @@
     state: started
 
 - name: Register encripted password
-  command: slappasswd -s "{{ldap_auth.bind_pw}}"
+  command: slappasswd -s "{{ldap_bind_pw}}"
   register: ldap_encripted_password
 
 - name: Copy db templates
@@ -31,7 +31,9 @@
 
 - name: Load ldap root entry
   ldap_entry:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "{{ldap_basedn}}"
     objectClass:
       - top
@@ -39,7 +41,9 @@
 
 - name: Load groups and users parent entry
   ldap_entry:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "ou={{item}},{{ldap_basedn}}"
     objectClass:
       - organizationalUnit
@@ -50,7 +54,9 @@
 
 - name: Load users
   ldap_entry:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
     objectClass:
       - person
@@ -69,7 +75,9 @@
 
 - name: Load groups
   ldap_entry:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
     objectClass:
       - groupOfUniqueNames
@@ -80,7 +88,9 @@
 
 - name: Add users to groups
   ldap_attr:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
     name: uniqueMember
     values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
@@ -91,7 +101,9 @@
 
 - name: Remove dummy entry
   ldap_attr:
-    params: "{{ldap_auth}}"
+    server_uri: "{{ldap_server_uri}}"
+    bind_dn: "{{ldap_basedn}}"
+    bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
     name: uniqueMember
     values: "uid=dummy,ou=people,{{ldap_basedn}}"
