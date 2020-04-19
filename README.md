@@ -1,6 +1,6 @@
 OpenLDAP Ansible Role
 =====================
-This role installs openldap and loads some example data
+This role installs openldap and loads some example data. Intended for development and tests purposes, not to be used as production server
 
 Requirements
 ------------
@@ -10,7 +10,7 @@ Role Variables
 --------------
 This role requires the following variables to be defined elsewhere in the playbook that uses it:
 ```yaml
-ldap_basedn:       dc=golili,dc=net           # Base DN
+ldap_basedn:       dc=mydomain,dc=net         # Base DN
 ldap_server_uri:   ldap://localhost:389       # LDAP server URI
 ldap_bind_pw:      secret                     # bind password
 ```
@@ -22,13 +22,13 @@ ldap_users:
     cn: Name1 Surname1
     givenname: Name1
     sn: Surname1
-    mail: userid1@golili.net
+    mail: userid1@mydomain.net
     userpassword: password
   user_id2:
     cn: Name2 Surname2
     givenname: Name2
     sn: Surname2
-    mail: userid2@golili.net
+    mail: userid2@mydomain.net
     userpassword: password
 ldap_groups:
   - name: group1
