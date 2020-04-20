@@ -6,7 +6,7 @@ olcSuffix: {{ldap_basedn}}
 dn: olcDatabase={{dbtype}},cn=config
 changetype: modify
 replace: olcRootDN
-olcRootDN: {{ldap_basedn}}
+olcRootDN: {{ldap_bind_dn}}
 
 dn: olcDatabase={{dbtype}},cn=config
 changetype: modify

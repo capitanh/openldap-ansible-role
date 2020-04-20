@@ -12,6 +12,7 @@ This role requires the following variables to be defined elsewhere in the playbo
 ```yaml
 ldap_basedn:       dc=mydomain,dc=net         # Base DN
 ldap_server_uri:   ldap://localhost:389       # LDAP server URI
+ldap_bind_dn:      cn=admin,{{ldap_basedn}}   # Requires ldap_basedn
 ldap_bind_pw:      secret                     # bind password
 ```
 
