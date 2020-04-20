@@ -11,4 +11,4 @@ olcRootDN: {{ldap_basedn}}
 dn: olcDatabase={{dbtype}},cn=config
 changetype: modify
 replace: olcRootPW
-olcRootPW: {{ldap_encripted_password.stdout}}
+olcRootPW: {{ldap_encrypted_password.stdout}}

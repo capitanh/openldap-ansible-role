@@ -7,9 +7,9 @@
     name: slapd
     state: started
 
-- name: Register encripted password
+- name: Register encrypted password
   command: slappasswd -s "{{ldap_bind_pw}}"
-  register: ldap_encripted_password
+  register: ldap_encrypted_password
 
 - name: Copy db templates
   template:
