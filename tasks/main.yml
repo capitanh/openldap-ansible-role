@@ -88,26 +88,26 @@
   with_items: "{{ldap_groups}}"
 
 - name: Add users to groups
-  ldap_attr:
+  ldap_attrs:
     server_uri: "{{ldap_server_uri}}"
     bind_dn: "{{ldap_basedn}}"
     bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.0.name}},ou=groups,{{ldap_basedn}}"
-    name: uniqueMember
-    values: "uid={{item.1}},ou=people,{{ldap_basedn}}"
+    attributes:
+      uniqueMember: "uid={{item.1}},ou=people,{{ldap_basedn}}"
     state: present
   with_subelements:
     - "{{ldap_groups}}"
     - members
 
 - name: Remove dummy entry
-  ldap_attr:
+  ldap_attrs:
     server_uri: "{{ldap_server_uri}}"
     bind_dn: "{{ldap_basedn}}"
     bind_pw: "{{ldap_bind_pw}}"
     dn: "cn={{item.name}},ou=groups,{{ldap_basedn}}"
-    name: uniqueMember
-    values: "uid=dummy,ou=people,{{ldap_basedn}}"
+    attributes:
+      uniqueMember: "uid=dummy,ou=people,{{ldap_basedn}}"
     state: absent
   with_items: "{{ldap_groups}}"
 
