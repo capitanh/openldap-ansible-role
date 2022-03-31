@@ -58,7 +58,7 @@
     server_uri: "{{ldap_server_uri}}"
     bind_dn: "{{ldap_basedn}}"
     bind_pw: "{{ldap_bind_pw}}"
-    dn: "cn={{item.value.cn}},ou=people,{{ldap_basedn}}"
+    dn: "uid={{item.key}},ou=people,{{ldap_basedn}}"
     objectClass:
       - person
       - organizationalPerson
